@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { ShoppingBag, Plus, Tag, CheckCircle2, AlertCircle } from 'lucide-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SAMPLE_ORDERS = [
   {
@@ -44,6 +45,36 @@ const SAMPLE_ORDERS = [
 export default function NativeOrdersScreen() {
   const router = useRouter();
   const [filter, setFilter] = useState('ALL');
+  const [orders, setOrders] = useState<any[]>(SAMPLE_ORDERS);
+
+  const loadOrders = async () => {
+    try {
+      const stored = await AsyncStorage.getItem('orders');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        const formatted = parsed.map((p: any) => ({
+          id: p.id,
+          customer: p.customerName,
+          type: p.productType,
+          title: `Custom ${p.productType.toUpperCase()}`,
+          cost: 0,
+          selling: p.totalRevenue || 0,
+          profit: p.netProfit || 0,
+          margin: p.totalRevenue ? ((p.netProfit / p.totalRevenue) * 100).toFixed(1) : 0,
+          status: 'In Progress',
+        }));
+        setOrders([...formatted.reverse(), ...SAMPLE_ORDERS]);
+      }
+    } catch (e) {
+      console.log('Failed to load orders', e);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadOrders();
+    }, [])
+  );
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -62,8 +93,26 @@ export default function NativeOrdersScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* Filter Chips */}
+      <View style={styles.filterRow}>
+        {['ALL', 'In Progress', 'Carving Phase', 'Gold Foil Polish'].map((f) => (
+          <TouchableOpacity
+            key={f}
+            onPress={() => setFilter(f)}
+            style={[styles.filterChip, filter === f && styles.filterChipActive]}
+          >
+            <Text style={[styles.filterText, filter === f && styles.filterTextActive]}>
+              {f}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       {/* Orders List */}
-      {SAMPLE_ORDERS.map((order) => (
+      {orders.filter((order) => {
+        if (filter === 'ALL') return true;
+        return order.status === filter;
+      }).map((order) => (
         <View key={order.id} style={styles.orderCard}>
           <View style={styles.orderTop}>
             <View>
@@ -116,10 +165,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  bannerTitle: { color: '#fbbf24', fontSize: 12, fontWeight: 'bold' },
+  bannerTitle: { color: '#0ea5e9', fontSize: 12, fontWeight: 'bold' },
   bannerSub: { color: '#94a3b8', fontSize: 11, marginTop: 2 },
   addBtn: {
-    backgroundColor: '#fbbf24',
+    backgroundColor: '#0ea5e9',
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 10,
@@ -129,6 +178,18 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   addBtnText: { color: '#0f172a', fontSize: 12, fontWeight: 'bold' },
+  filterRow: { flexDirection: 'row', gap: 8, marginBottom: 14, flexWrap: 'wrap' },
+  filterChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: '#0f172a',
+    borderWidth: 1,
+    borderColor: '#1e293b',
+  },
+  filterChipActive: { backgroundColor: '#0ea5e920', borderColor: '#0ea5e9' },
+  filterText: { color: '#94a3b8', fontSize: 11, fontWeight: 'bold' },
+  filterTextActive: { color: '#0ea5e9' },
   orderCard: {
     backgroundColor: '#0f172a',
     borderRadius: 16,
@@ -138,12 +199,12 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   orderTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  orderId: { color: '#fbbf24', fontSize: 11, fontWeight: 'bold' },
+  orderId: { color: '#0ea5e9', fontSize: 11, fontWeight: 'bold' },
   custName: { color: '#f8fafc', fontSize: 14, fontWeight: 'bold', marginTop: 2 },
   statusBadge: { backgroundColor: '#10b98120', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20 },
   statusText: { color: '#34d399', fontSize: 11, fontWeight: 'bold' },
   orderTitle: { color: '#cbd5e1', fontSize: 13, marginTop: 8 },
-  sqFtTag: { color: '#fbbf24', fontSize: 12, marginTop: 4, fontWeight: '600' },
+  sqFtTag: { color: '#0ea5e9', fontSize: 12, marginTop: 4, fontWeight: '600' },
   calcRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',

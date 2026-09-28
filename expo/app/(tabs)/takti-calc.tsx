@@ -76,7 +76,7 @@ export default function NativeTaktiCalcScreen() {
 
       {/* Calculated Sq.Ft Badge */}
       <View style={styles.badge}>
-        <Layers color="#fbbf24" size={16} />
+        <Layers color="#0ea5e9" size={16} />
         <Text style={styles.badgeText}>
           Total Slab Area = {sqFt} Sq. Feet ({len}" × {wid}")
         </Text>
@@ -152,7 +152,7 @@ export default function NativeTaktiCalcScreen() {
 
         <View style={styles.resultRow}>
           <Text style={styles.resultLabel}>Net Profit per Sq.Ft:</Text>
-          <Text style={[styles.resultVal, { color: '#fbbf24' }]}>
+          <Text style={[styles.resultVal, { color: '#0ea5e9' }]}>
             ₹ {profitPerSqFt} / sq.ft
           </Text>
         </View>
@@ -165,12 +165,12 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#020617' },
   content: { padding: 16 },
   infoBox: { backgroundColor: '#0f172a', padding: 14, borderRadius: 12, borderWidth: 1, borderColor: '#1e293b', marginBottom: 16 },
-  infoTitle: { color: '#fbbf24', fontSize: 11, fontWeight: 'bold', letterSpacing: 0.5 },
+  infoTitle: { color: '#0ea5e9', fontSize: 11, fontWeight: 'bold', letterSpacing: 0.5 },
   infoDesc: { color: '#94a3b8', fontSize: 12, marginTop: 4, lineHeight: 18 },
   label: { color: '#94a3b8', fontSize: 12, fontWeight: '600', marginBottom: 6 },
   row: { flexDirection: 'row', gap: 8, marginBottom: 14 },
   stoneBtn: { flex: 1, backgroundColor: '#0f172a', paddingVertical: 10, borderRadius: 10, borderWidth: 1, borderColor: '#1e293b', alignItems: 'center' },
-  stoneBtnActive: { backgroundColor: '#fbbf24', borderColor: '#fbbf24' },
+  stoneBtnActive: { backgroundColor: '#0ea5e9', borderColor: '#0ea5e9' },
   stoneBtnText: { color: '#94a3b8', fontSize: 12, fontWeight: 'bold' },
   stoneBtnTextActive: { color: '#0f172a' },
   inputGrid: { flexDirection: 'row', gap: 12, marginBottom: 12 },
@@ -188,15 +188,15 @@ const styles = StyleSheet.create({
   badge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fbbf2415',
+    backgroundColor: '#0ea5e915',
     borderWidth: 1,
-    borderColor: '#fbbf2440',
+    borderColor: '#0ea5e940',
     padding: 10,
     borderRadius: 10,
     marginBottom: 16,
     gap: 8,
   },
-  badgeText: { color: '#fbbf24', fontSize: 13, fontWeight: 'bold' },
+  badgeText: { color: '#0ea5e9', fontSize: 13, fontWeight: 'bold' },
   sectionCard: {
     backgroundColor: '#0f172a',
     borderRadius: 14,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   quickRow: { flexDirection: 'row', gap: 8, marginTop: 8 },
   quickBtn: { backgroundColor: '#1e293b', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 6 },
-  quickBtnText: { color: '#fbbf24', fontSize: 11, fontWeight: '600' },
+  quickBtnText: { color: '#0ea5e9', fontSize: 11, fontWeight: '600' },
   resultCard: { backgroundColor: '#0f172a', borderRadius: 16, padding: 16, borderWidth: 1.5 },
   profitBorder: { borderColor: '#10b981' },
   lossBorder: { borderColor: '#ef4444' },

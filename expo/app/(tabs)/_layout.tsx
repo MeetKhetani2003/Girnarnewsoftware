@@ -1,12 +1,12 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { LayoutDashboard, ShoppingBag, FileText, Menu } from 'lucide-react-native';
+import { LayoutDashboard, ShoppingBag, FileText, Menu, Users } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#fbbf24',
+        tabBarActiveTintColor: '#0ea5e9',
         tabBarInactiveTintColor: '#94a3b8',
         tabBarStyle: {
           backgroundColor: '#0f172a',
@@ -52,6 +52,16 @@ export default function TabLayout() {
           headerTitle: 'GST Invoices & Billing',
           tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <FileText color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="parties"
+        options={{
+          title: 'Khata',
+          headerTitle: 'Parties & Khata Book',
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+            <Users color={color} size={size} />
           ),
         }}
       />

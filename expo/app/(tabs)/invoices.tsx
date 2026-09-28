@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Share, Alert, Platform } from 'react-native';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { FileText, Plus, CheckCircle, Clock, Share2, Download, Printer } from 'lucide-react-native';
+import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SAMPLE_INVOICES = [
   {
@@ -48,6 +51,88 @@ const SAMPLE_INVOICES = [
 export default function NativeInvoicesScreen() {
   const router = useRouter();
   const [filter, setFilter] = useState('ALL');
+  const [invoices, setInvoices] = useState<any[]>(SAMPLE_INVOICES);
+
+  const loadInvoices = async () => {
+    try {
+      const stored = await AsyncStorage.getItem('invoices');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        const formatted = parsed.map((p: any) => ({
+          id: p.id,
+          customer: p.customer,
+          date: p.date ? p.date.split('T')[0] : 'Unknown',
+          items: p.itemName,
+          taxable: p.subtotal,
+          gst: p.gstAmt,
+          total: p.total,
+          paid: 0,
+          due: p.total,
+          status: 'UNPAID',
+          pedhi: 'Girnarshilp'
+        }));
+        // Show newly created ones at the top
+        setInvoices([...formatted.reverse(), ...SAMPLE_INVOICES]);
+      }
+    } catch (e) {
+      console.log('Failed to load invoices', e);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadInvoices();
+    }, [])
+  );
+
+  const handlePreview = async (inv: any) => {
+    try {
+      const html = `
+        <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+            <style>
+              body { font-family: 'Helvetica', sans-serif; padding: 40px; color: #333; }
+              .header { text-align: center; border-bottom: 2px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 20px; }
+              h1 { color: #0ea5e9; margin: 0; font-size: 28px; }
+              .info { display: flex; justify-content: space-between; margin-bottom: 30px; }
+              table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+              th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+              th { background-color: #f8fafc; color: #0ea5e9; }
+              .totals { width: 50%; float: right; }
+              .totals table { width: 100%; border: none; }
+              .totals td { border: none; padding: 8px; text-align: right; }
+              .grand-total { font-size: 20px; font-weight: bold; color: #0ea5e9; }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1>${inv.pedhi.toUpperCase()}</h1>
+              <p>GST TAX INVOICE</p>
+            </div>
+            <div class="info">
+              <div><p><b>Billed To:</b><br/>${inv.customer}</p></div>
+              <div style="text-align: right;"><p><b>Invoice No:</b> ${inv.id}<br/><b>Date:</b> ${inv.date}</p></div>
+            </div>
+            <table>
+              <tr><th>Description</th><th>Amount</th></tr>
+              <tr><td>${inv.items}</td><td>₹${inv.taxable.toLocaleString()}</td></tr>
+            </table>
+            <div class="totals">
+              <table>
+                <tr><td>Taxable Subtotal:</td><td>₹${inv.taxable.toLocaleString()}</td></tr>
+                <tr><td>GST:</td><td>₹${inv.gst.toLocaleString()}</td></tr>
+                <tr><td class="grand-total">GRAND TOTAL:</td><td class="grand-total">₹${inv.total.toLocaleString()}</td></tr>
+              </table>
+            </div>
+          </body>
+        </html>
+      `;
+      await Print.printAsync({ html });
+    } catch (err: any) {
+      Alert.alert('Error', err.message);
+    }
+  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -82,8 +167,12 @@ export default function NativeInvoicesScreen() {
       </View>
 
       {/* Invoices List */}
-      {SAMPLE_INVOICES.map((inv) => (
-        <View key={inv.id} style={styles.invCard}>
+      {invoices.filter((inv) => {
+        if (filter === 'ALL') return true;
+        if (filter === 'PARTIAL') return inv.status === 'PARTIALLY_PAID';
+        return inv.status === filter;
+      }).map((inv) => (
+        <TouchableOpacity key={inv.id} style={styles.invCard} onPress={() => handlePreview(inv)}>
           <View style={styles.invTop}>
             <View>
               <Text style={styles.invNumber}>{inv.id}</Text>
@@ -136,12 +225,25 @@ export default function NativeInvoicesScreen() {
 
           {/* Quick Action Footer */}
           <View style={styles.actionRow}>
-            <TouchableOpacity style={styles.actionBtn}>
+            <TouchableOpacity 
+              style={styles.actionBtn}
+              onPress={() => handlePreview(inv)}
+            >
               <Printer color="#94a3b8" size={14} />
-              <Text style={styles.actionBtnText}>Print</Text>
+              <Text style={styles.actionBtnText}>Print / PDF</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.actionBtn}>
+            <TouchableOpacity 
+              style={styles.actionBtn}
+              onPress={async () => {
+                try {
+                  const message = `*TAX INVOICE*\n\nInvoice No: ${inv.id}\nDate: ${inv.date}\nCustomer: ${inv.customer}\n\nItem: ${inv.items}\nSubtotal: ₹${inv.taxable}\nGST: ₹${inv.gst}\n*TOTAL: ₹${inv.total.toLocaleString()}*\n\nThank you!`;
+                  await Share.share({ message, title: 'Share Invoice' });
+                } catch (err: any) {
+                  Alert.alert("Error", err.message);
+                }
+              }}
+            >
               <Share2 color="#94a3b8" size={14} />
               <Text style={styles.actionBtnText}>WhatsApp</Text>
             </TouchableOpacity>
@@ -157,7 +259,7 @@ export default function NativeInvoicesScreen() {
               </TouchableOpacity>
             )}
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );
@@ -179,7 +281,7 @@ const styles = StyleSheet.create({
   bannerTitle: { color: '#60a5fa', fontSize: 11, fontWeight: 'bold' },
   bannerSub: { color: '#94a3b8', fontSize: 11, marginTop: 2 },
   newBtn: {
-    backgroundColor: '#fbbf24',
+    backgroundColor: '#0ea5e9',
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 10,
@@ -214,11 +316,11 @@ const styles = StyleSheet.create({
   invDate: { color: '#64748b', fontSize: 11, marginTop: 1 },
   statusBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12 },
   paidBadge: { backgroundColor: '#10b98120' },
-  partialBadge: { backgroundColor: '#fbbf2420' },
+  partialBadge: { backgroundColor: '#0ea5e920' },
   unpaidBadge: { backgroundColor: '#ef444420' },
   statusText: { fontSize: 10, fontWeight: 'bold' },
   paidText: { color: '#34d399' },
-  partialText: { color: '#fbbf24' },
+  partialText: { color: '#0ea5e9' },
   unpaidText: { color: '#f87171' },
   custName: { color: '#f8fafc', fontSize: 14, fontWeight: 'bold', marginTop: 8 },
   itemsDesc: { color: '#94a3b8', fontSize: 12, marginTop: 2 },

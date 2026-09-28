@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   modeRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' },
   modeBtn: { backgroundColor: '#020617', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, borderWidth: 1, borderColor: '#334155' },
-  modeBtnActive: { backgroundColor: '#fbbf24', borderColor: '#fbbf24' },
+  modeBtnActive: { backgroundColor: '#0ea5e9', borderColor: '#0ea5e9' },
   modeText: { color: '#94a3b8', fontSize: 11, fontWeight: 'bold' },
   modeTextActive: { color: '#0f172a' },
   saveBtn: {

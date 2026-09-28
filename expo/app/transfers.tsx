@@ -64,7 +64,7 @@ export default function NativeTransfersScreen() {
               <Text style={styles.routeLabel}>FROM</Text>
               <Text style={styles.routeText}>{t.from}</Text>
             </View>
-            <ArrowLeftRight color="#fbbf24" size={16} />
+            <ArrowLeftRight color="#0ea5e9" size={16} />
             <View style={styles.routeCol}>
               <Text style={styles.routeLabel}>TO</Text>
               <Text style={styles.routeText}>{t.to}</Text>
@@ -106,12 +106,12 @@ const styles = StyleSheet.create({
   trfId: { color: '#c084fc', fontSize: 12, fontWeight: 'bold', fontFamily: 'monospace' },
   statusBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10 },
   statusDone: { backgroundColor: '#10b98120' },
-  statusTransit: { backgroundColor: '#fbbf2420' },
+  statusTransit: { backgroundColor: '#0ea5e920' },
   statusText: { fontSize: 10, fontWeight: 'bold' },
   statusDoneText: { color: '#34d399' },
-  statusTransitText: { color: '#fbbf24' },
+  statusTransitText: { color: '#0ea5e9' },
   itemName: { color: '#f8fafc', fontSize: 14, fontWeight: 'bold', marginTop: 8 },
-  qtyTag: { color: '#fbbf24', fontSize: 12, fontWeight: 'bold', marginTop: 2 },
+  qtyTag: { color: '#0ea5e9', fontSize: 12, fontWeight: 'bold', marginTop: 2 },
   routeBox: {
     flexDirection: 'row',
     alignItems: 'center',

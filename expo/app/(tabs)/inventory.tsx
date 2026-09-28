@@ -92,7 +92,7 @@ export default function NativeInventoryScreen() {
 
             <View style={styles.statBox}>
               <Text style={styles.statLabel}>Selling Rate</Text>
-              <Text style={[styles.statVal, { color: '#fbbf24' }]}>
+              <Text style={[styles.statVal, { color: '#0ea5e9' }]}>
                 ₹ {item.rate.toLocaleString()} / {item.unit}
               </Text>
             </View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e293b',
   },
-  pillActive: { backgroundColor: '#fbbf24', borderColor: '#fbbf24' },
+  pillActive: { backgroundColor: '#0ea5e9', borderColor: '#0ea5e9' },
   pillText: { color: '#94a3b8', fontSize: 12, fontWeight: 'bold' },
   pillTextActive: { color: '#0f172a' },
   card: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   cardTop: { flexDirection: 'row', justifyContent: 'space-between' },
-  itemType: { color: '#fbbf24', fontSize: 10, fontWeight: 'bold', letterSpacing: 0.5 },
+  itemType: { color: '#0ea5e9', fontSize: 10, fontWeight: 'bold', letterSpacing: 0.5 },
   pedhiTag: { color: '#64748b', fontSize: 10, fontWeight: 'bold' },
   itemName: { color: '#f8fafc', fontSize: 14, fontWeight: 'bold', marginTop: 4 },
   specs: { color: '#94a3b8', fontSize: 12, marginTop: 4 },

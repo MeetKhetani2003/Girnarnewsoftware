@@ -35,7 +35,7 @@ export default function NativeDashboardScreen() {
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.content}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#fbbf24" />}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0ea5e9" />}
     >
       {/* Pedhi Switcher Banner */}
       <View style={styles.pedhiCard}>
@@ -50,7 +50,7 @@ export default function NativeDashboardScreen() {
             </Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/pedhis')} style={styles.pedhiSettingsBtn}>
-            <Text style={{ color: '#fbbf24', fontSize: 11, fontWeight: 'bold' }}>Manage</Text>
+            <Text style={{ color: '#0ea5e9', fontSize: 11, fontWeight: 'bold' }}>Manage</Text>
           </TouchableOpacity>
         </View>
 
@@ -77,10 +77,10 @@ export default function NativeDashboardScreen() {
       <View style={styles.actionStrip}>
         <TouchableOpacity
           onPress={() => router.push('/create-order')}
-          style={[styles.actionBtn, { borderColor: '#fbbf2450', backgroundColor: '#fbbf2415' }]}
+          style={[styles.actionBtn, { borderColor: '#0ea5e950', backgroundColor: '#0ea5e915' }]}
         >
-          <ShoppingBag color="#fbbf24" size={16} />
-          <Text style={[styles.actionText, { color: '#fbbf24' }]}>+ Order</Text>
+          <ShoppingBag color="#0ea5e9" size={16} />
+          <Text style={[styles.actionText, { color: '#0ea5e9' }]}>+ Order</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -116,9 +116,9 @@ export default function NativeDashboardScreen() {
           <Text style={styles.cardSub}>4 Custom Bookings</Text>
         </View>
 
-        <View style={[styles.card, { borderColor: '#fbbf2433' }]}>
+        <View style={[styles.card, { borderColor: '#0ea5e933' }]}>
           <Text style={styles.cardLabel}>NET EST. PROFIT</Text>
-          <Text style={[styles.cardValue, { color: '#fbbf24' }]}>₹ 62,400</Text>
+          <Text style={[styles.cardValue, { color: '#0ea5e9' }]}>₹ 62,400</Text>
           <Text style={styles.cardSub}>33.9% Margin</Text>
         </View>
       </View>
@@ -128,7 +128,7 @@ export default function NativeDashboardScreen() {
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>3 SPECIALIZED PRODUCT CATEGORIES</Text>
           <TouchableOpacity onPress={() => router.push('/(tabs)/takti-calc')}>
-            <Text style={{ color: '#fbbf24', fontSize: 11, fontWeight: 'bold' }}>Open Calc →</Text>
+            <Text style={{ color: '#0ea5e9', fontSize: 11, fontWeight: 'bold' }}>Open Calc →</Text>
           </TouchableOpacity>
         </View>
 
@@ -141,7 +141,7 @@ export default function NativeDashboardScreen() {
             <Text style={styles.catDesc}>Lakha Red Stone, Jet Black Granite, Makrana Marble</Text>
             <Text style={styles.catMeta}>Custom Quarry Sourcing Rate • Length × Width ÷ 144</Text>
           </View>
-          <ArrowRight color="#fbbf24" size={16} />
+          <ArrowRight color="#0ea5e9" size={16} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 10,
-    backgroundColor: '#fbbf24',
+    backgroundColor: '#0ea5e9',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e293b',
     marginRight: 8,
   },
-  pedhiChipActive: { backgroundColor: '#fbbf24' },
+  pedhiChipActive: { backgroundColor: '#0ea5e9' },
   pedhiChipText: { color: '#94a3b8', fontSize: 12, fontWeight: '600' },
   pedhiChipTextActive: { color: '#0f172a', fontWeight: 'bold' },
   actionStrip: { flexDirection: 'row', gap: 8, marginBottom: 14 },
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   cardSub: { color: '#94a3b8', fontSize: 11 },
   section: { backgroundColor: '#0f172a', borderRadius: 16, padding: 16, borderWidth: 1, borderColor: '#1e293b' },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  sectionTitle: { color: '#fbbf24', fontSize: 11, fontWeight: 'bold', letterSpacing: 0.5 },
+  sectionTitle: { color: '#0ea5e9', fontSize: 11, fontWeight: 'bold', letterSpacing: 0.5 },
   categoryItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -241,5 +241,5 @@ const styles = StyleSheet.create({
   },
   catTitle: { color: '#f8fafc', fontSize: 14, fontWeight: 'bold' },
   catDesc: { color: '#94a3b8', fontSize: 12, marginTop: 2 },
-  catMeta: { color: '#fbbf24', fontSize: 11, marginTop: 4, fontWeight: '500' },
+  catMeta: { color: '#0ea5e9', fontSize: 11, marginTop: 4, fontWeight: '500' },
 });

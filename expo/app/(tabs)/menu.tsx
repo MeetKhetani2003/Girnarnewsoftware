@@ -58,7 +58,7 @@ export default function NativeDrawerMenuScreen() {
           label: 'Takti Sq.Ft Profit Engine',
           desc: 'L" × W" ÷ 144 • Custom quarry rate (e.g. ₹450 vs ₹500)',
           icon: Calculator,
-          color: '#fbbf24',
+          color: '#0ea5e9',
           route: '/(tabs)/takti-calc',
           badge: 'Factory Costing',
         },
@@ -73,7 +73,7 @@ export default function NativeDrawerMenuScreen() {
           label: 'Quarries & Stone Suppliers',
           desc: 'Rajasthan quarries, stone lots & supplier rates',
           icon: Truck,
-          color: '#fb923c',
+          color: '#38bdf8',
           route: '/suppliers',
         },
         {
@@ -111,7 +111,7 @@ export default function NativeDrawerMenuScreen() {
           label: '4 Pedhis Management',
           desc: 'GST details, bank accounts, print settings',
           icon: Settings,
-          color: '#fbbf24',
+          color: '#0ea5e9',
           route: '/pedhis',
         },
       ],
@@ -161,10 +161,10 @@ export default function NativeDrawerMenuScreen() {
       <View style={styles.quickGrid}>
         <TouchableOpacity
           onPress={() => router.push('/create-order')}
-          style={[styles.quickBtn, { borderColor: '#fbbf2450', backgroundColor: '#fbbf2415' }]}
+          style={[styles.quickBtn, { borderColor: '#0ea5e950', backgroundColor: '#0ea5e915' }]}
         >
-          <ShoppingBag color="#fbbf24" size={18} />
-          <Text style={[styles.quickBtnText, { color: '#fbbf24' }]}>+ New Order</Text>
+          <ShoppingBag color="#0ea5e9" size={18} />
+          <Text style={[styles.quickBtnText, { color: '#0ea5e9' }]}>+ New Order</Text>
           <Text style={styles.quickBtnSub}>Takti / Mandir</Text>
         </TouchableOpacity>
 
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 12,
-    backgroundColor: '#fbbf24',
+    backgroundColor: '#0ea5e9',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -268,9 +268,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e293b',
   },
-  pedhiChipActive: { backgroundColor: '#fbbf2420', borderColor: '#fbbf24' },
+  pedhiChipActive: { backgroundColor: '#0ea5e920', borderColor: '#0ea5e9' },
   pedhiChipText: { color: '#94a3b8', fontSize: 12, fontWeight: 'bold' },
-  pedhiChipTextActive: { color: '#fbbf24' },
+  pedhiChipTextActive: { color: '#0ea5e9' },
   pedhiChipCity: { color: '#64748b', fontSize: 10, marginTop: 2 },
   pedhiChipCityActive: { color: '#f8fafc' },
   quickGrid: { flexDirection: 'row', gap: 8, marginBottom: 16 },
@@ -315,13 +315,13 @@ const styles = StyleSheet.create({
   itemTitle: { color: '#f8fafc', fontSize: 13, fontWeight: 'bold' },
   itemDesc: { color: '#94a3b8', fontSize: 11, marginTop: 2 },
   badge: {
-    backgroundColor: '#fbbf2420',
+    backgroundColor: '#0ea5e920',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 6,
     marginLeft: 6,
   },
-  badgeText: { color: '#fbbf24', fontSize: 9, fontWeight: 'bold' },
+  badgeText: { color: '#0ea5e9', fontSize: 9, fontWeight: 'bold' },
   footer: { alignItems: 'center', marginTop: 12, marginBottom: 20 },
   footerText: { color: '#64748b', fontSize: 11, fontWeight: '500' },
   footerSub: { color: '#34d399', fontSize: 10, marginTop: 2, fontWeight: '600' },
