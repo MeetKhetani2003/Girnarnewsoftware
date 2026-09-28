@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 import { ShoppingBag, Plus, Tag, CheckCircle2, AlertCircle } from 'lucide-react-native';
 
 const SAMPLE_ORDERS = [
@@ -41,16 +42,24 @@ const SAMPLE_ORDERS = [
 ];
 
 export default function NativeOrdersScreen() {
+  const router = useRouter();
   const [filter, setFilter] = useState('ALL');
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Banner */}
+      {/* Banner with Add Order Button */}
       <View style={styles.banner}>
         <View style={{ flex: 1 }}>
           <Text style={styles.bannerTitle}>ORDERS & CUSTOM SOURCING PROFIT</Text>
           <Text style={styles.bannerSub}>All bookings track real supplier sourcing cost & net margin.</Text>
         </View>
+        <TouchableOpacity
+          onPress={() => router.push('/create-order')}
+          style={styles.addBtn}
+        >
+          <Plus color="#0f172a" size={16} />
+          <Text style={styles.addBtnText}>+ Order</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Orders List */}
@@ -103,10 +112,23 @@ const styles = StyleSheet.create({
     padding: 14,
     borderWidth: 1,
     borderColor: '#1e293b',
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 16,
   },
   bannerTitle: { color: '#fbbf24', fontSize: 12, fontWeight: 'bold' },
-  bannerSub: { color: '#94a3b8', fontSize: 12, marginTop: 2 },
+  bannerSub: { color: '#94a3b8', fontSize: 11, marginTop: 2 },
+  addBtn: {
+    backgroundColor: '#fbbf24',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginLeft: 8,
+  },
+  addBtnText: { color: '#0f172a', fontSize: 12, fontWeight: 'bold' },
   orderCard: {
     backgroundColor: '#0f172a',
     borderRadius: 16,

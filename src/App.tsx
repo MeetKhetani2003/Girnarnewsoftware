@@ -28,6 +28,7 @@ import { LedgerStatementModal } from './components/LedgerStatementModal.tsx';
 import { OrderCreateModal } from './components/OrderCreateModal.tsx';
 import { ExpoNativeHubModal } from './components/ExpoNativeHubModal.tsx';
 import { TaktiCostingModal } from './components/TaktiCostingModal.tsx';
+import { DrawerMenu } from './components/DrawerMenu.tsx';
 
 import { Customer, Product, Invoice, Pedhi, Order } from './types/index.ts';
 
@@ -35,6 +36,7 @@ function MainAppContent() {
   const { currentPedhi, isLoading } = useAuth();
 
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Modals state
   const [isPedhiSelectorOpen, setIsPedhiSelectorOpen] = useState(false);
@@ -97,6 +99,7 @@ function MainAppContent() {
           setPaymentPreselectedCustomer(null);
           setIsPaymentModalOpen(true);
         }}
+        onOpenDrawer={() => setIsDrawerOpen(true)}
         onOpenExpoHub={() => setIsExpoHubOpen(true)}
         onOpenTaktiCalc={() => setIsTaktiCostingOpen(true)}
       />
@@ -228,8 +231,28 @@ function MainAppContent() {
         )}
       </div>
 
-      {/* Bottom Mobile Navigation */}
-      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      {/* Bottom Mobile Navigation (3 Quick Tabs + Drawer Menu) */}
+      <BottomNavigation
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        onOpenDrawer={() => setIsDrawerOpen(true)}
+      />
+
+      {/* Slide-out Drawer Menu (All 11+ modules & fast pedhi switcher) */}
+      <DrawerMenu
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        activeTab={activeTab}
+        onSelectTab={(tab) => setActiveTab(tab)}
+        onOpenNewOrder={() => setIsOrderCreateModalOpen(true)}
+        onOpenNewInvoice={() => setIsInvoiceCreateModalOpen(true)}
+        onOpenNewPayment={(type) => {
+          setPaymentModalType(type);
+          setPaymentPreselectedCustomer(null);
+          setIsPaymentModalOpen(true);
+        }}
+        onOpenPedhiSelector={() => setIsPedhiSelectorOpen(true)}
+      />
 
       {/* Modals */}
       <PedhiSelectorModal

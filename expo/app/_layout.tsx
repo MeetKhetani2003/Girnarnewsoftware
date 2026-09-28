@@ -22,7 +22,24 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Details' }} />
+        <Stack.Screen name="parties" options={{ title: 'Parties & Khata Ledger' }} />
+        <Stack.Screen name="inventory" options={{ title: 'Inventory (3 Product Lines)' }} />
+        <Stack.Screen name="suppliers" options={{ title: 'Quarries & Stone Suppliers' }} />
+        <Stack.Screen name="transfers" options={{ title: 'Inter-Pedhi Stock Transfers' }} />
+        <Stack.Screen name="rojmel" options={{ title: 'Rojmel / Daily Cashbook' }} />
+        <Stack.Screen name="pedhis" options={{ title: '4 Pedhis Management' }} />
+        <Stack.Screen
+          name="create-order"
+          options={{ presentation: 'modal', title: 'New Order & Costing' }}
+        />
+        <Stack.Screen
+          name="create-invoice"
+          options={{ presentation: 'modal', title: 'Create GST Invoice' }}
+        />
+        <Stack.Screen
+          name="payment"
+          options={{ presentation: 'modal', title: 'Record Jama / Naame' }}
+        />
       </Stack>
     </SafeAreaProvider>
   );

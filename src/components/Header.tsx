@@ -1,11 +1,12 @@
 import React from 'react';
-import { ChevronDown, Building2, User, PlusCircle, ShieldCheck } from 'lucide-react';
+import { ChevronDown, Building2, User, PlusCircle, ShieldCheck, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.tsx';
 
 interface HeaderProps {
   onOpenPedhiSelector: () => void;
   onOpenNewInvoice: () => void;
   onOpenNewPayment: () => void;
+  onOpenDrawer?: () => void;
   onOpenExpoHub?: () => void;
   onOpenTaktiCalc?: () => void;
 }
@@ -14,6 +15,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenPedhiSelector,
   onOpenNewInvoice,
   onOpenNewPayment,
+  onOpenDrawer,
   onOpenExpoHub,
   onOpenTaktiCalc,
 }) => {
@@ -22,32 +24,45 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <div className="bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 px-3.5 py-2.5 sticky top-0 z-20">
       <div className="flex items-center justify-between">
-        {/* Pedhi Selector Trigger */}
-        <button
-          onClick={onOpenPedhiSelector}
-          className="flex items-center space-x-2 text-left group hover:opacity-90 transition-opacity cursor-pointer min-w-0"
-        >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white shadow-md shadow-amber-950/40 shrink-0">
-            <Building2 className="w-4 h-4" />
-          </div>
-          <div className="min-w-0">
-            <div className="flex items-center space-x-1">
-              <span className="font-bold text-xs sm:text-sm text-slate-100 group-hover:text-amber-300 transition-colors truncate max-w-[130px] sm:max-w-[190px]">
-                {currentPedhi?.name || 'Select Pedhi'}
-              </span>
-              <ChevronDown className="w-3.5 h-3.5 text-amber-400 group-hover:translate-y-0.5 transition-transform shrink-0" />
-            </div>
-            <div className="flex items-center space-x-1.5 text-[10px] text-slate-400">
-              <span className="text-amber-400 font-medium">
-                {currentPedhi?.contactDetails?.city || 'Gujarat'}
-              </span>
-              <span>•</span>
-              <span className="truncate max-w-[100px]">{currentPedhi?.businessType || 'Vyapar'}</span>
-            </div>
-          </div>
-        </button>
+        {/* Left: Drawer Trigger & Pedhi Selector */}
+        <div className="flex items-center space-x-2 min-w-0">
+          {onOpenDrawer && (
+            <button
+              onClick={onOpenDrawer}
+              className="p-1.5 rounded-lg text-slate-300 hover:text-amber-400 hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
+              title="Open Navigation Menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          )}
 
-        {/* Quick action buttons & Expo trigger */}
+          <button
+            onClick={onOpenPedhiSelector}
+            className="flex items-center space-x-2 text-left group hover:opacity-90 transition-opacity cursor-pointer min-w-0"
+            title="Switch Business Pedhi"
+          >
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-slate-950 font-bold shadow-md shadow-amber-950/40 shrink-0">
+              <Building2 className="w-4 h-4 text-slate-950" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center space-x-1">
+                <span className="font-bold text-xs sm:text-sm text-slate-100 group-hover:text-amber-300 transition-colors truncate max-w-[120px] sm:max-w-[180px]">
+                  {currentPedhi?.name || 'Select Pedhi'}
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 text-amber-400 group-hover:translate-y-0.5 transition-transform shrink-0" />
+              </div>
+              <div className="flex items-center space-x-1.5 text-[10px] text-slate-400">
+                <span className="text-amber-400 font-medium">
+                  {currentPedhi?.contactDetails?.city || 'Gujarat'}
+                </span>
+                <span>•</span>
+                <span className="truncate max-w-[90px]">{currentPedhi?.businessType || 'Vyapar'}</span>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* Right: Quick Action Buttons */}
         <div className="flex items-center space-x-1.5 shrink-0">
           {onOpenTaktiCalc && (
             <button
@@ -71,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onOpenNewPayment}
-            className="flex items-center space-x-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer"
+            className="flex items-center space-x-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer"
             title="Record Jama / Naame (Payment)"
           >
             <span>+ Jama</span>
@@ -90,4 +105,3 @@ export const Header: React.FC<HeaderProps> = ({
     </div>
   );
 };
-

@@ -1,25 +1,34 @@
 # Girnar Shilp Multi-Pedhi Vyapar (Expo React Native + Next-Native Serverless APIs)
 
 Mobile-first multi-pedhi business management app for 4 enterprises:
-1. **Girnarshilp** (Temple Architecture, Mandirs & Mega Projects)
-2. **ArvindRamjibhai** (Pure Sevan Wooden Mandirs)
-3. **Jaipurshilpkala** (Divine Makrana Marble Bhagwan Murtis)
-4. **Bhagvatikalamandir** (Granite & Lakha Red Stone Taktis in Sq. Ft)
+1. **Girnarshilp** (Temple Architecture, Mandirs & Mega Projects - Rajkot)
+2. **ArvindRamjibhai** (Pure Sevan Wooden Mandirs - Rajkot)
+3. **Jaipurshilpkala** (Divine Makrana Marble Bhagwan Murtis - Jaipur)
+4. **Bhagvatikalamandir** (Granite & Lakha Red Stone Taktis in Sq. Ft - Morbi)
 
 ---
 
-## 🚀 Key Features
+## 📱 Mobile-First UI Architecture
 
-- **Takti Square Feet & Custom Supplier Profit Engine**:
-  - Measures Takti in Square Feet (`Length(in) x Width(in) / 144`).
-  - Solves the factory problem: when sourcing costs fluctuate from suppliers (e.g., ₹450/sq.ft vs ₹500/sq.ft) and factory doesn't know in advance which supplier's slab will be used, enter a **Custom Supplier Price** while booking to instantly compute exact net profit and profit margin percentage!
-- **Next-Native Serverless API Routes (`app/api/+api.ts`)**:
-  - Direct serverless endpoints inside Expo Router (`/api/costing`, `/api/orders`, `/api/[...route]`) connecting to MongoDB Atlas!
-- **Multi-Pedhi Switching**: Instant switching across 4 separate pedhis with isolated ledgers, invoices, inventory, and Rojmel (cash book).
+- **Streamlined 3-Tab Bottom Navigation**:
+  1. 🏠 **Home**: Real-time sales KPIs, order counts, profit margins, quick action buttons, and active Pedhi switcher.
+  2. 📦 **Orders**: Orders with Takti Square Feet measurements, custom quarry pricing, and net profit tracking.
+  3. 🧾 **Bills**: GST tax invoices with HSN, payment status (Paid, Partial, Unpaid), PDF printing, and WhatsApp sharing.
+  4. ☰ **Drawer Menu**: Opens the comprehensive slide-in Drawer covering all 11+ modules without crowding the bottom bar!
+
+- **All Features Accessible via Drawer & Quick Actions**:
+  - 📐 **Takti Sq.Ft Profit Engine**: Formula `(Length" × Width") ÷ 144 = Sq.Ft`. Solves factory quarry pricing variations (e.g. ₹420 vs ₹450 vs ₹500/sq.ft) with custom supplier pricing options.
+  - 🧱 **Inventory & Stock**: Categorized for all 3 product lines (Taktis in Sq.Ft, Sevan Wood Mandirs in Pcs, Makrana Marble Murtis in Pcs).
+  - 👥 **Parties & Khata Ledger**: Customer and vendor accounts with Lena (Receivable) and Dena (Payable) balances.
+  - 🚚 **Quarries & Stone Suppliers**: Rajasthan quarries, stone lots, and price tracking.
+  - 🔄 **Stock Transfers**: Inter-pedhi inventory transfers across the 4 Pedhis.
+  - 📖 **Rojmel (Daybook / Cashbook)**: Daily Jama (Cash In) and Naame (Cash Out) register.
+  - 🏛️ **4 Pedhis Management**: Fast switching and settings.
+  - ⚡ **Next-Native Serverless APIs (`app/api/+api.ts`)**: Direct serverless routes connecting to MongoDB Atlas!
 
 ---
 
-## 📲 How to Run Locally with Expo Go
+## 🚀 Running the App Locally
 
 1. **Install dependencies**:
    ```bash
@@ -27,23 +36,16 @@ Mobile-first multi-pedhi business management app for 4 enterprises:
    npm install
    ```
 
-2. **Set Environment Variables in `expo/.env`**:
+2. **Configure Environment in `expo/.env`**:
    ```env
    MONGODB_URI="mongodb://meetkhetani1111_db_user:U0gKyuDry2hCVODV@ac-jl18wkj-shard-00-00.z4iviiq.mongodb.net:27017,ac-jl18wkj-shard-00-01.z4iviiq.mongodb.net:27017,ac-jl18wkj-shard-00-02.z4iviiq.mongodb.net:27017/?ssl=true&replicaSet=atlas-73wprs-shard-0&authSource=admin&appName=Cluster0"
    EXPO_PUBLIC_API_URL="http://localhost:3000/api"
    ```
 
-3. **Start the Expo development server**:
+3. **Start Expo Dev Server**:
    ```bash
-   npx expo start
+   npx expo start --tunnel
    ```
 
-4. **Scan QR Code**:
-   - Open **Expo Go** on your iPhone (Camera app) or Android (Expo Go app) and scan the terminal QR code.
-   - For remote testing without local Wi-Fi, use `npx expo start --tunnel`.
-
----
-
-## ⚡ Serverless API Deployment
-
-Expo Router supports web server output (`"output": "server"` in `app.json`), allowing serverless deployment on Vercel, Cloudflare, Netlify, or EAS Hosting.
+4. **Preview on Device**:
+   - Open **Expo Go** on Android or Camera app on iOS and scan the terminal QR code.
