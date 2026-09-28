@@ -1,0 +1,6 @@
+{
+  "name": "Girnar Shilp Multi-Pedhi Manager",
+  "description": "Mobile-first business management and Khata Vyapar system for multi-firm enterprises with GST billing, ledger, and stock tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
