@@ -12,6 +12,8 @@ import { SuppliersView } from './views/SuppliersView.tsx';
 import { TransfersView } from './views/TransfersView.tsx';
 import { RojmelView } from './views/RojmelView.tsx';
 import { PedhisManagementView } from './views/PedhisManagementView.tsx';
+import { TaktiCostingView } from './views/TaktiCostingView.tsx';
+import { ExpoServerlessView } from './views/ExpoServerlessView.tsx';
 
 // Modals
 import { PedhiSelectorModal } from './components/PedhiSelectorModal.tsx';
@@ -24,6 +26,8 @@ import { InvoiceViewModal } from './components/InvoiceViewModal.tsx';
 import { PaymentModal } from './components/PaymentModal.tsx';
 import { LedgerStatementModal } from './components/LedgerStatementModal.tsx';
 import { OrderCreateModal } from './components/OrderCreateModal.tsx';
+import { ExpoNativeHubModal } from './components/ExpoNativeHubModal.tsx';
+import { TaktiCostingModal } from './components/TaktiCostingModal.tsx';
 
 import { Customer, Product, Invoice, Pedhi, Order } from './types/index.ts';
 
@@ -59,6 +63,10 @@ function MainAppContent() {
   const [isLedgerStatementModalOpen, setIsLedgerStatementModalOpen] = useState(false);
   const [ledgerCustomerId, setLedgerCustomerId] = useState<string | null>(null);
 
+  // Expo & Takti Costing Modals
+  const [isExpoHubOpen, setIsExpoHubOpen] = useState(false);
+  const [isTaktiCostingOpen, setIsTaktiCostingOpen] = useState(false);
+
   // Key to force refresh views when modal changes happen
   const [viewKey, setViewKey] = useState(0);
   const triggerRefresh = () => setViewKey((prev) => prev + 1);
@@ -76,7 +84,10 @@ function MainAppContent() {
   }
 
   return (
-    <MobileFrame onOpenPedhiSelector={() => setIsPedhiSelectorOpen(true)}>
+    <MobileFrame
+      onOpenPedhiSelector={() => setIsPedhiSelectorOpen(true)}
+      onOpenExpoHub={() => setIsExpoHubOpen(true)}
+    >
       {/* Top Header */}
       <Header
         onOpenPedhiSelector={() => setIsPedhiSelectorOpen(true)}
@@ -86,6 +97,8 @@ function MainAppContent() {
           setPaymentPreselectedCustomer(null);
           setIsPaymentModalOpen(true);
         }}
+        onOpenExpoHub={() => setIsExpoHubOpen(true)}
+        onOpenTaktiCalc={() => setIsTaktiCostingOpen(true)}
       />
 
       {/* Main View Area */}
@@ -125,6 +138,21 @@ function MainAppContent() {
               setActiveInvoice(inv);
               setIsInvoiceViewModalOpen(true);
             }}
+          />
+        )}
+
+        {activeTab === 'takti-calc' && (
+          <TaktiCostingView
+            onBookOrderWithCosting={() => {
+              setIsOrderCreateModalOpen(true);
+            }}
+          />
+        )}
+
+        {activeTab === 'expo' && (
+          <ExpoServerlessView
+            onOpenOrderModal={() => setIsOrderCreateModalOpen(true)}
+            onOpenTaktiCalc={() => setIsTaktiCostingOpen(true)}
           />
         )}
 
@@ -293,6 +321,30 @@ function MainAppContent() {
         onOpenInvoiceView={(inv) => {
           setActiveInvoice(inv);
           setIsInvoiceViewModalOpen(true);
+        }}
+      />
+
+      {/* Expo Native & Serverless API Hub Modal */}
+      <ExpoNativeHubModal
+        isOpen={isExpoHubOpen}
+        onClose={() => setIsExpoHubOpen(false)}
+        onOpenTaktiCalc={() => {
+          setIsExpoHubOpen(false);
+          setIsTaktiCostingOpen(true);
+        }}
+        onOpenOrderModal={() => {
+          setIsExpoHubOpen(false);
+          setIsOrderCreateModalOpen(true);
+        }}
+      />
+
+      {/* Takti Dedicated Sq.Ft & Supplier Costing Modal */}
+      <TaktiCostingModal
+        isOpen={isTaktiCostingOpen}
+        onClose={() => setIsTaktiCostingOpen(false)}
+        onBookOrderWithCosting={() => {
+          setIsTaktiCostingOpen(false);
+          setIsOrderCreateModalOpen(true);
         }}
       />
     </MobileFrame>

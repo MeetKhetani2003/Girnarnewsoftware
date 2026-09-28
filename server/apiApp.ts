@@ -11,6 +11,7 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import supplierRoutes from './routes/supplierRoutes.js';
 import stockTransferRoutes from './routes/stockTransferRoutes.js';
+import costingRoutes from './routes/costingRoutes.js';
 import seedRoutes, { runInitialSeedIfNeeded } from './routes/seedRoutes.js';
 
 export const apiApp = express();
@@ -24,6 +25,7 @@ apiApp.get('/health', (req, res) => {
   res.status(200).json({
     status: 'active',
     message: 'Girnar Shilp Multi-Pedhi API server is running',
+    expoServerlessMode: true,
     database: getDatabaseStatus()
   });
 });
@@ -39,6 +41,7 @@ apiApp.use('/orders', orderRoutes);
 apiApp.use('/suppliers', supplierRoutes);
 apiApp.use('/transfers', stockTransferRoutes);
 apiApp.use('/dashboard', dashboardRoutes);
+apiApp.use('/costing', costingRoutes);
 apiApp.use('/seed', seedRoutes);
 
 // Connect DB & run initial seed check

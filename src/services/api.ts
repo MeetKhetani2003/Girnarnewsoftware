@@ -398,4 +398,65 @@ export const api = {
       method: 'POST',
     });
   },
+
+  // Serverless Costing Engine (Takti, Mandir, Murti)
+  async calculateTaktiCosting(payload: {
+    stoneType: string;
+    lengthInches: number;
+    widthInches: number;
+    customSupplierCostPerSqFt: number;
+    labourCostPerSqFt: number;
+    sellingRatePerSqFt: number;
+    supplierName?: string;
+  }) {
+    return request<{
+      success: boolean;
+      stoneType: string;
+      dimensions: { lengthInches: number; widthInches: number; totalSqFt: number };
+      costing: {
+        supplierName: string;
+        customSupplierCostPerSqFt: number;
+        labourCostPerSqFt: number;
+        totalCostPerSqFt: number;
+        totalCost: number;
+      };
+      pricing: { sellingRatePerSqFt: number; totalRevenue: number };
+      profitability: { profitPerSqFt: number; totalProfit: number; marginPercent: number; status: string };
+      supplierComparison: Array<{
+        supplier: string;
+        supplierCostPerSqFt: number;
+        totalCostPerSqFt: number;
+        totalCost: number;
+        netProfit: number;
+        marginPercent: number;
+      }>;
+      serverlessEngine: string;
+    }>('/costing/takti-calculator', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async calculateMandirCosting(payload: any) {
+    return request<any>('/costing/mandir-calculator', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async calculateMurtiCosting(payload: any) {
+    return request<any>('/costing/murti-calculator', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  // Raw Serverless Call (For Expo Serverless API tester)
+  async executeRawServerlessCall(endpoint: string, method: string = 'GET', body?: any) {
+    const options: RequestInit = { method };
+    if (body && method !== 'GET') {
+      options.body = JSON.stringify(body);
+    }
+    return request<any>(endpoint, options);
+  },
 };
